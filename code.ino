@@ -1,22 +1,32 @@
 #define BLYNK_PRINT Serial
+
 #include <BlynkSimpleEsp32.h>
 #include <MFRC522.h>
 #include <LiquidCrystal_I2C.h>
+
 LiquidCrystal_I2C lcd(0x27,16,2);
 BlynkTimer timer;
+
 #define RST_PIN 34 // Configurable, see typical pin layout above
 #define SS_PIN 2 // Configurable, see typical pin layout above
+
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance.
 uint8_t j = 0; // Variable used for counter
+
 String user1 = "B7 87 43 D6";
 String user2 = "A7 92 6A D7";
+
 int travled_time = 0;
 int travled_time2 = 0;
+
 int amount = 2;
+
 int start_count = 0;
 int start_count2 = 0;
+
 int u1 = 0;
 int u2 = 0;
+
 void setup()
 {
 Serial.begin(9600);
@@ -32,6 +42,7 @@ delay(2000);
 timer.setInterval(500, rfid);
 timer.setInterval(1000, cal_time);
 }
+
 void cal_time()
 {
 if(start_count == 1)
@@ -45,6 +56,7 @@ travled_time2 += 1;
 Serial.println("2 Total Time:" + String(travled_time2));
 }
 }
+
 void rfid()
 {
 lcd.clear();
@@ -115,6 +127,7 @@ delay(1000);
 lcd.clear();
 }
 }
+
 void display_fare(int user)
 {
 if(user == 1)
@@ -142,6 +155,7 @@ travled_time2 = 0;
 delay(2000);
 }
 }
+
 void loop()
 {
 timer.run();
